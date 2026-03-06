@@ -9,14 +9,20 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python dependencies first (layer cache)
+# Install CPU-only PyTorch FIRST to prevent pip from pulling the CUDA version (~3.5GB)
+# CPU-only torch is ~500MB vs ~3.5GB for CUDA
+RUN pip install --no-cache-dir \
+    torch==2.5.1+cpu \
+    --index-url https://download.pytorch.org/whl/cpu
+
+# Copy and install remaining Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY app/ ./app/
 
-# Azure App Service sets the PORT env var; default to 8000
+# PORT env var (Railway and Azure both set this automatically)
 ENV PORT=8000
 
 # Expose port
