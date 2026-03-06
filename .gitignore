@@ -211,6 +211,9 @@ chroma_db/
 *.log
 logs/
 nul
+*.jpg
+*.jpeg
+*.png
 
 # Frontend
 frontend/.next/
