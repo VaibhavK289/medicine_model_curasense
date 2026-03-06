@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://127.0.0.1:8002/:path*",
+        destination: "https://vaibhavk289-curasense-backend.hf.space/:path*",
       },
     ];
   },
