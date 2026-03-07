@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  MessageCircle,
-  Pill,
-  Stethoscope,
-  AlertTriangle,
-  GitCompare,
-  ArrowRight,
-} from "lucide-react";
+import { MessageCircle, LayoutGrid, ArrowRight, Pill, Stethoscope, AlertTriangle, GitCompare } from "lucide-react";
 
 const features = [
   {
@@ -16,49 +9,27 @@ const features = [
     text: "text-blue-700",
     title: "AI Chat",
     description:
-      "Ask anything about medicines, symptoms, or health. CuraSense uses Gemini AI with session memory to give context-aware answers.",
+      "Ask anything about medicines, symptoms, or health. CuraSense uses Gemini AI with session memory to give fully formatted, context-aware answers.",
+    subFeatures: [] as string[],
   },
   {
-    href: "/lookup",
-    icon: Pill,
+    href: "/medicine",
+    icon: LayoutGrid,
     light: "bg-purple-50",
     text: "text-purple-700",
-    title: "Medicine Lookup",
+    title: "Medicine Hub",
     description:
-      "Search any medicine by name and get full enriched details: composition, uses, side effects, warnings, and cost.",
-  },
-  {
-    href: "/recommend",
-    icon: Stethoscope,
-    light: "bg-teal-50",
-    text: "text-teal-700",
-    title: "Symptom Advisor",
-    description:
-      "Describe your symptoms and receive ranked medicine recommendations with pros, cons, and safety notes.",
-  },
-  {
-    href: "/interaction",
-    icon: AlertTriangle,
-    light: "bg-amber-50",
-    text: "text-amber-700",
-    title: "Drug Interaction",
-    description:
-      "Enter two medicine names to get an AI-powered interaction risk assessment — Low, Moderate, or High.",
-  },
-  {
-    href: "/compare",
-    icon: GitCompare,
-    light: "bg-rose-50",
-    text: "text-rose-700",
-    title: "Compare Medicines",
-    description:
-      "Side-by-side comparison of ingredients, dosage, price, and safety scores for any two medicines.",
+      "All medicine tools in one place — search by name, get symptom-based recommendations, check drug interactions, and compare two medicines side by side.",
+    subFeatures: ["Medicine Lookup", "Symptom Advisor", "Drug Interaction", "Compare Medicines"],
   },
 ];
 
+const subIcons = [Pill, Stethoscope, AlertTriangle, GitCompare];
+const subColors = ["text-purple-500", "text-teal-500", "text-amber-500", "text-rose-500"];
+
 export default function Home() {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-12">
+    <div className="max-w-4xl mx-auto px-8 py-12">
       {/* Hero */}
       <div className="mb-12">
         <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
@@ -79,25 +50,40 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Feature grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {features.map(({ href, icon: Icon, light, text, title, description }) => (
+      {/* Feature cards — 2 sections */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {features.map(({ href, icon: Icon, light, text, title, description, subFeatures }) => (
           <Link
             key={href}
             href={href}
-            className="group bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-slate-300 transition-all"
+            className="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col"
           >
-            <div className={`inline-flex items-center justify-center w-10 h-10 ${light} rounded-xl mb-3`}>
-              <Icon className={`${text}`} size={20} />
+            <div className={`inline-flex items-center justify-center w-11 h-11 ${light} rounded-xl mb-4`}>
+              <Icon className={text} size={22} />
             </div>
-            <h2 className="text-base font-semibold text-slate-800 mb-1.5">{title}</h2>
-            <p className="text-sm text-slate-500 leading-relaxed mb-4">{description}</p>
+            <h2 className="text-lg font-semibold text-slate-800 mb-2">{title}</h2>
+            <p className="text-sm text-slate-500 leading-relaxed mb-5 flex-1">{description}</p>
+
+            {subFeatures.length > 0 && (
+              <div className="grid grid-cols-2 gap-2 mb-5">
+                {subFeatures.map((label, i) => {
+                  const SubIcon = subIcons[i];
+                  return (
+                    <div
+                      key={label}
+                      className="flex items-center gap-1.5 text-xs text-slate-500 bg-slate-50 rounded-lg px-2.5 py-1.5"
+                    >
+                      <SubIcon size={12} className={subColors[i]} />
+                      {label}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             <div className={`flex items-center gap-1 text-xs font-semibold ${text}`}>
               Get started{" "}
-              <ArrowRight
-                size={12}
-                className="group-hover:translate-x-0.5 transition-transform"
-              />
+              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
             </div>
           </Link>
         ))}

@@ -2,22 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  MessageCircle,
-  Pill,
-  Stethoscope,
-  AlertTriangle,
-  GitCompare,
-  Heart,
-} from "lucide-react";
+import { MessageCircle, LayoutGrid, Heart } from "lucide-react";
 import clsx from "clsx";
 
 const NAV = [
-  { href: "/chat",         label: "AI Chat",              icon: MessageCircle },
-  { href: "/lookup",       label: "Medicine Lookup",       icon: Pill },
-  { href: "/recommend",    label: "Symptom Advisor",       icon: Stethoscope },
-  { href: "/interaction",  label: "Drug Interaction",      icon: AlertTriangle },
-  { href: "/compare",      label: "Compare Medicines",     icon: GitCompare },
+  { href: "/chat",     label: "AI Chat",       icon: MessageCircle },
+  { href: "/medicine", label: "Medicine Hub",  icon: LayoutGrid },
 ];
 
 export default function Sidebar() {

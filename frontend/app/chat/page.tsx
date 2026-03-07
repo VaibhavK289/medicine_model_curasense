@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { chat, ChatResponse } from "@/lib/api";
 import { Send, Bot, User, RefreshCw } from "lucide-react";
+import MarkdownContent from "@/components/MarkdownContent";
 import clsx from "clsx";
 
 interface Message {
@@ -116,7 +117,11 @@ export default function ChatPage() {
                   : "bg-blue-600 text-white"
               )}
             >
-              <p className="whitespace-pre-wrap">{msg.content}</p>
+              {msg.role === "assistant" ? (
+                <MarkdownContent content={msg.content} />
+              ) : (
+                <p className="whitespace-pre-wrap">{msg.content}</p>
+              )}
               {msg.intent && (
                 <span className="mt-1.5 inline-block text-[10px] bg-blue-50 text-blue-500 px-1.5 py-0.5 rounded-full">
                   intent: {msg.intent}
